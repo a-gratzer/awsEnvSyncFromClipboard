@@ -30,7 +30,7 @@ func (r AWSClientReader) GetCredentials() []domain.CredentialsGroup {
 
 	var groups = []domain.CredentialsGroup{}
 	r.sequentialRead(CREDENTIALS, func(line string) {
-		if line[0] == '[' {
+		if len(line) > 0 && line[0] == '[' {
 			groups = r.attachNewGroup(groups, line)
 		} else {
 			r.updateLastGroup(groups, line)
@@ -42,7 +42,7 @@ func (r AWSClientReader) GetCredentials() []domain.CredentialsGroup {
 
 func (r AWSClientReader) attachNewGroup(groups []domain.CredentialsGroup, line string) []domain.CredentialsGroup {
 	if line == "" || line[0] != '[' {
-		return nil
+		return groups
 	}
 
 	line = strings.ReplaceAll(line, "[", "")
