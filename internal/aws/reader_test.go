@@ -9,19 +9,19 @@ import (
 func Test_read_config_must_panic(t *testing.T) {
 
 	assert.Panics(t, func() {
-		NewAWSClientReader(logger.GetZapLogger(true), "non_existent").LogRawConfig()
+		NewReader(logger.GetZapLogger(true), "non_existent").LogRawConfig()
 	}, "no such file or directory")
 
 }
 
 func Test_read_config(t *testing.T) {
 	assert.NotPanics(t, func() {
-		NewAWSClientReader(logger.GetZapLogger(true), getRootPath()).LogRawConfig()
+		NewReader(logger.GetZapLogger(true), getRootPath()).LogRawConfig()
 	})
 }
 
 func Test_read_credentials(t *testing.T) {
-	credentials := NewAWSClientReader(logger.GetZapLogger(true), getRootPath()).GetCredentials()
+	credentials := NewReader(logger.GetZapLogger(true), getRootPath()).ReadCredentials()
 	assert.Equal(t, 3, len(credentials))
 	assert.Equal(t, "develop", credentials[0].Name)
 	assert.Equal(t, "develop_1", credentials[0].Credentials.AwsAccessKeyId)

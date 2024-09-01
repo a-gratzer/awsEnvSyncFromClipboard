@@ -9,24 +9,16 @@ import (
 	"strings"
 )
 
-const (
-	CREDENTIALS           = "credentials"
-	CONFIG                = "config"
-	AWS_ACCESS_KEY_ID     = "aws_access_key_id"
-	AWS_SECRET_ACCESS_KEY = "aws_secret_access_key"
-	AWS_SESSION_TOKEN     = "aws_session_token"
-)
-
 type AWSClientReader struct {
 	logger   *zap.Logger
 	rootPath string
 }
 
-func NewAWSClientReader(logger *zap.Logger, rootPath string) *AWSClientReader {
+func NewReader(logger *zap.Logger, rootPath string) *AWSClientReader {
 	return &AWSClientReader{logger: logger, rootPath: rootPath}
 }
 
-func (r AWSClientReader) GetCredentials() []domain.CredentialsGroup {
+func (r AWSClientReader) ReadCredentials() []domain.CredentialsGroup {
 
 	var groups = []domain.CredentialsGroup{}
 	r.sequentialRead(CREDENTIALS, func(line string) {
