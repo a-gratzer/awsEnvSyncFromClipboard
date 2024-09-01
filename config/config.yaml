@@ -1,0 +1,13 @@
+logger:
+  debug: true
+  logLevel: DEBUG
+  output:
+    - stdout
+aws:
+  cli:
+    root: ~/.aws
+
+
+
+
+
